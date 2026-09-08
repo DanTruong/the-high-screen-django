@@ -1,5 +1,6 @@
 <!--  blog/templates/blog/detail.html -->
 
+
 {% extends "base.html" %}
 
 {% block page_title %}
@@ -8,13 +9,16 @@
 
 {% block page_content %}
     <small>
-        Written by: {{ post.author.get_full_name }} ({{ post.author.username }}) |
-        {{ post.created_on.date }} | Categories:
+        Written by: {{ post.author.get_full_name }} |
+        {{ post.published_on.date }} | Categories:
         {% for category in post.categories.all %}
             <a href="{% url 'blog_category' category.name %}">
                 {{ category.name }}
             </a>
         {% endfor %}
     </small>
-    <p>{{ post.body | linebreaks }}</p>
+
+    <div class="post-body">
+        {{ post.body|safe }}
+    </div>
 {% endblock page_content %}

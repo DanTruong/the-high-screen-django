@@ -13,14 +13,24 @@ class Category(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
-    body = models.TextField()
+    slug = models.SlugField(
+        max_length=255,
+        null=True,
+        blank=True,
+    )
+    
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
         on_delete=models.CASCADE, 
         related_name="posts"
     )
+
+    body = models.TextField()
+
+    published_on = models.DateTimeField(null=True, blank=True,)
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
+
     categories = models.ManyToManyField(
         "Category", 
         related_name="posts"
@@ -40,3 +50,15 @@ class Comment(models.Model):
     def __str__(self):
         return f"{self.author} on '{self.post}'"
 
+class SiteSettings(models.Model):
+    site_name = models.CharField(
+        max_length=100,
+        default="The High Screen"
+    )
+
+    class Meta:
+        verbose_name = "Site Settings"
+        verbose_name_plural = "Site Settings"
+
+    def __str__(self):
+        return self.site_name
