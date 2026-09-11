@@ -1,24 +1,36 @@
-<!--  blog/templates/blog/detail.html -->
-
-
 {% extends "base.html" %}
 
-{% block page_title %}
-    <h2>{{ post.title }}</h2>
-{% endblock page_title %}
+{% block title %}
+    {{ post.title }} | {{ site_settings.site_name }}
+{% endblock %}
 
 {% block page_content %}
-    <small>
-        Written by: {{ post.author.get_full_name }} |
-        {{ post.published_on.date }} | Categories:
-        {% for category in post.categories.all %}
-            <a href="{% url 'blog_category' category.name %}">
-                {{ category.name }}
-            </a>
-        {% endfor %}
-    </small>
 
-    <div class="post-body">
+<article class="post-preview">
+
+    <header>
+        <h2 class="post-title">
+            {{ post.title }}
+        </h2>
+
+        <p class="post-meta">
+            Posted by
+            <span>
+                {{ post.author.get_full_name }}
+            </span>
+
+            {% if post.published_on %}
+                on {{ post.published_on|date:"F j, Y" }}
+            {% endif %}
+        </p>
+    </header>
+
+    <hr class="my-4">
+
+    <div class="post-content">
         {{ post.body|safe }}
     </div>
-{% endblock page_content %}
+
+</article>
+
+{% endblock %}

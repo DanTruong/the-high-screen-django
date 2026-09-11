@@ -1,0 +1,26 @@
+<article class="post-preview">
+
+    <a href="{% url 'blog_detail' post.pk %}">
+        <h2 class="post-title">
+            {{ post.title }}
+        </h2>
+
+        {% if post.excerpt %}
+            <h3 class="post-subtitle">
+                {{ post.excerpt }}
+            </h3>
+        {% endif %}
+    </a>
+
+    <p class="post-meta">
+        Posted by
+        <span>
+            {{ post.author.get_full_name }}
+        </span>
+
+        {% if post.published_on %}
+            on {{ post.published_on|date:"F j, Y" }}
+        {% endif %}
+    </p>
+
+</article>

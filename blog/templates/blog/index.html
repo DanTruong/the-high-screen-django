@@ -1,25 +1,23 @@
-<!-- blog/templates/blog/index.html -->
-
 {% extends "base.html" %}
 
-{% block page_title %}
-    <h2>Blog Posts</h2>
-{% endblock page_title %}
+{% block title %}
+    The High Screen
+{% endblock %}
 
 {% block page_content %}
-    {% block posts %}
-        {% for post in posts %}
-            <h3><a href="{% url 'blog_detail' post.pk %}">{{ post.title }}</a></h3>
-            <small>
-                Written by: {{ post.author.get_full_name }} |
-                {{ post.published_on.date }} | Categories:
-                {% for category in post.categories.all %}
-                    <a href="{% url 'blog_category' category.name %}">
-                        {{ category.name }}
-                    </a>
-                {% endfor %}
-            </small>
-            <p>{{ post.body | slice:":400" }}...</p>
-        {% endfor %}
-    {% endblock posts %}
-{% endblock page_content %}
+
+    {% for post in posts %}
+
+        {% include "blog/partials/post_preview.html" %}
+
+        {% if not forloop.last %}
+            <hr class="my-4">
+        {% endif %}
+
+    {% empty %}
+
+        <p>No posts are currently available.</p>
+
+    {% endfor %}
+
+{% endblock %}

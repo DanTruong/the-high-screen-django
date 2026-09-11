@@ -1,17 +1,125 @@
-<!-- templates/base.html -->
+{% load static %}
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>{{ site_settings.site_name }}</title>
-        <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+        {% block title %}
+            {{ site_settings.site_name }}
+        {% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'blog/vendor/bootstrap.min.css' %}"
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'blog/css/ths.css' %}"
+    >
 </head>
+
 <body>
-<h1>{{ site_settings.site_name }}</h1>
-<a href="{% url "blog_index" %}">Home</a>
-<hr>
-{% block page_title %}{% endblock page_title %}
-{% block page_content %}{% endblock page_content %}
+
+    <header class="site-header">
+        <a href="{% url 'blog_index' %}" class="site-title-link">
+            <h1 class="site-title">
+                {{ site_settings.site_name }}
+            </h1>
+        </a>
+    </header>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark site-navbar">
+        <div class="container">
+
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div
+                class="collapse navbar-collapse justify-content-center"
+                id="navbarNav"
+            >
+                <ul class="navbar-nav">
+
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            href="{% url 'blog_category' 'the-buckets-blog' %}"
+                        >
+                            The Buckets Blog
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            href="{% url 'blog_category' 'show-dont-tell' %}"
+                        >
+                            Show Don't Tell
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            href="{% url 'blog_category' 'features' %}"
+                        >
+                            Features
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            href="{% url 'blog_category' 'editorial' %}"
+                        >
+                            Editorials
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <main class="container py-5">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+
+                    {% block page_content %}
+                    {% endblock %}
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script
+        src="{% static 'blog/js/bootstrap.bundle.min.js' %}"
+    ></script>
+
 </body>
 </html>
