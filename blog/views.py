@@ -4,7 +4,8 @@ from django.shortcuts import render
 from blog.models import Post, Comment
 
 def blog_index(request):
-    posts = Post.objects.all().order_by("-created_on")
+    #posts = Post.objects.all().order_by("-created_on")
+    posts = Post.objects.all().order_by("-published_on")
     context = {
         "posts": posts,
     }
